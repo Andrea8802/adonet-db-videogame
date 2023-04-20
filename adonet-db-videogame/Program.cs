@@ -6,47 +6,83 @@ namespace adonet_db_videogame
     {
         static void Main(string[] args)
         {
-            //    string strConnessione = "Server=localhost;Database=adonet-db-videogame;Trusted_Connection=True;";
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine("Cosa vuoi fare?\n");
+                    Console.WriteLine($"1) Inserire un videogioco\n" +
+                        $"2) Ricercare un videogioco per ID\n" +
+                        $"3) Ricercare un videogioco per nome\n" +
+                        $"4) Eliminare un videogioco\n" +
+                        $"5) Esci");
 
-            //    using (SqlConnection connessione = new SqlConnection(strConnessione))
-            //    {
-            //        try
-            //        {
-            //            connessione.Open();
-            //            Console.WriteLine("Connection Opened!");
+                    ConsoleKey tastoUtente = Console.ReadKey(true).Key;
 
-            //            string query = "SELECT * FROM videogames";
+                    switch (tastoUtente)
+                    {
+                        case ConsoleKey.D1:
 
-            //            using (SqlCommand cmd = new SqlCommand(query, connessione))
-            //            using (SqlDataReader reader = cmd.ExecuteReader())
-            //            {
-            //                while (reader.Read())
-            //                {
-            //                    long id = (long)reader["id"];
-            //                    string name = (string)reader["name"];
-            //                    string overview = (string)reader["overview"];
-            //                    DateTime releaseAt = (DateTime)reader["release_date"];
-            //                    DateTime createdAt = (DateTime)reader["created_at"];
-            //                    DateTime updatedAt = (DateTime)reader["updated_at"];
+                            Console.WriteLine("Inserisci il nome del videogioco:");
+                            string name = Console.ReadLine();
 
-            //                    Videogame newVideogame = new Videogame(id, name, overview, releaseAt, createdAt, updatedAt);
-            //                    Console.WriteLine(releaseAt.ToString(), createdAt.ToString(), updatedAt.ToString());
-            //                }
+                            Console.WriteLine("Inserisci la descrizione del videogioco:");
+                            string overview = Console.ReadLine();
 
+                            Console.WriteLine("Inserisci la data di rilascio del videogioco:");
+                            DateTime releaseDate = DateTime.Parse(Console.ReadLine());
 
-            //            }
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            Console.WriteLine(ex.Message);
-            //        }
-            //    }
+                            Console.WriteLine("Le scelte possibili per la Software House sono: \n" +
+                                "1) Nintendo \n" +
+                                "2) Rockstar Games \n" +
+                                "3) Valve Corporation \n" +
+                                "4) Electronic Arts \n" +
+                                "5) Ubisoft \n" +
+                                "6) Konami \n");
 
-            VideogameManager.CancellaVideogioco(2);
-            //VideogameManager.RicercaPerId(350);
-            //VideogameManager.RicercaPerNome("lorem");
-            //VideogameManager.InserisciVideogame(Console.ReadLine(), Console.ReadLine(), DateTime.Parse(Console.ReadLine()), DateTime.Parse(Console.ReadLine()), DateTime.Parse(Console.ReadLine()));
+                            long shId = long.Parse(Console.ReadLine());
 
-        }
+                            VideogameManager.InserisciVideogame(name, overview, releaseDate, shId);
+
+                            break;
+
+                        case ConsoleKey.D2:
+
+                            Console.WriteLine("Inserisci l'id per cercare un videogioco:");
+                            long id = long.Parse(Console.ReadLine());
+
+                            VideogameManager.RicercaPerId(id);
+
+                            break;
+
+                        case ConsoleKey.D3:
+
+                            Console.WriteLine("Inserisci il nome per cercare un videogioco:");
+                            string nome = Console.ReadLine();
+
+                            VideogameManager.RicercaPerNome(nome);
+
+                            break;
+
+                        case ConsoleKey.D4:
+
+                            Console.WriteLine("Inserisci l'id del videogioco da cancellare:");
+                            long idVideogame = long.Parse(Console.ReadLine());
+
+                            VideogameManager.CancellaVideogioco(idVideogame);
+
+                            break;
+
+                        case ConsoleKey.D5:
+                            return;
+                    }
+                }
+                catch (Exception ex) {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+                
+            }
     }
 }
