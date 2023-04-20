@@ -32,7 +32,7 @@ namespace adonet_db_videogame
                     cmd.Parameters.Add(new SqlParameter("@sh_id", 1));
 
                     int videogameRaw = cmd.ExecuteNonQuery();
-                        if(videogameRaw == 1)
+                    if (videogameRaw == 1)
                     {
                         Console.WriteLine("Dato Caricato!");
                     }
@@ -40,7 +40,7 @@ namespace adonet_db_videogame
                     {
                         Console.WriteLine("Dato non caricato!");
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -49,7 +49,7 @@ namespace adonet_db_videogame
             }
         }
 
-        public static void RicercaPerID(long id)
+        public static void RicercaPerId(long id)
         {
             string strConnessione = "Server=localhost;Database=adonet-db-videogame;Trusted_Connection=True;";
 
@@ -64,9 +64,40 @@ namespace adonet_db_videogame
                     SqlCommand cmd = new SqlCommand(query, connessione);
                     cmd.Parameters.Add(new SqlParameter("@id", id));
 
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
                     {
-                        while (reader.Read()) {
+                        Console.WriteLine(reader["name"]);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
+        public static void RicercaPerNome(string name)
+        {
+            string strConnessione = "Server=localhost;Database=adonet-db-videogame;Trusted_Connection=True;";
+
+            using (SqlConnection connessione = new SqlConnection(strConnessione))
+            {
+                try
+                {
+                    connessione.Open();
+                    Console.WriteLine("Connection Opened!");
+                    string query = "SELECT * FROM videogames WHERE name like '%' + @name + '%'";
+
+                    SqlCommand cmd = new SqlCommand(query, connessione);
+                    cmd.Parameters.Add(new SqlParameter("@name", name));
+
+                    using SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        while (reader.Read())
+                        {
                             Console.WriteLine(reader["name"]);
                         }
                     }
@@ -76,6 +107,40 @@ namespace adonet_db_videogame
                 {
                     Console.WriteLine(ex.Message);
                 }
+            }
+        }
+        public static void CancellaVideogioco(long id)
+        {
+            string strConnessione = "Server=localhost;Database=adonet-db-videogame;Trusted_Connection=True;";
+
+            using (SqlConnection connessione = new SqlConnection(strConnessione))
+            {
+                try
+                {
+                    connessione.Open();
+                    Console.WriteLine("Connection Opened!");
+                    string query = "DELETE FROM videogames WHERE id = @id";
+
+                    SqlCommand cmd = new SqlCommand(query, connessione);
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+
+                    int videogameRaw = cmd.ExecuteNonQuery();
+                    if (videogameRaw == 1)
+                    {
+                        Console.WriteLine("Dato Eliminato!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Dato non eliminato!");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+                
             }
         }
     }

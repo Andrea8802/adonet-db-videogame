@@ -42,8 +42,10 @@ namespace adonet_db_videogame
             //        }
             //    }
 
-            VideogameManager.RicercaPerID(505);
-            VideogameManager.InserisciVideogame(Console.ReadLine(), Console.ReadLine(), DateTime.Parse(Console.ReadLine()), DateTime.Parse(Console.ReadLine()), DateTime.Parse(Console.ReadLine()));
+            VideogameManager.CancellaVideogioco(2);
+            //VideogameManager.RicercaPerId(350);
+            //VideogameManager.RicercaPerNome("lorem");
+            //VideogameManager.InserisciVideogame(Console.ReadLine(), Console.ReadLine(), DateTime.Parse(Console.ReadLine()), DateTime.Parse(Console.ReadLine()), DateTime.Parse(Console.ReadLine()));
 
         }
     }
